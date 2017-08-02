@@ -7,9 +7,9 @@ import store from './store/store'
 class App extends Component {
     render() {
         return (
-            // <Provider>
+            <Provider store={store}>
                 <Router />
-            // </Provider>
+            </Provider>
         )
     }
 }
