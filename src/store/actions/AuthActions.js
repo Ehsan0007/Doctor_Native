@@ -1,54 +1,91 @@
 import firebase from 'firebase';
 import { Actions } from 'react-native-router-flux';
 import {
+    FIRST_NAME,
+    LAST_NAME,
     EMAIL_CHANGED,
     PASSWORD_CHANGED,
     LOGIN_USER_SUCCESS,
     LOGIN_USER_FAIL,
-    LOGIN_USER
+    LOGIN_USER,
+    SIGNUP_USER_SUCCESS,
+    SIGNUP_USER,
+    SIGNUP_USER_FAIL
 } from './types';
 
-export const emailChanged = (text) => {
-    console.log("emailChanged", text);
-    return {
-        type: EMAIL_CHANGED,
-        payload: text
+export class AuthActions {
+
+      static firstChange = (text) => {
+        return {
+            type: FIRST_NAME,
+            payload: text
+        };
     };
-};
 
-export const passwordChanged = (text) => {
-    console.log("passwordChanged", text);
-
-    return {
-        type: PASSWORD_CHANGED,
-        payload: text
+      static lastChange = (text) => {
+        return {
+            type: LAST_NAME,
+            payload: text
+        };
     };
-};
 
-export const loginUser = ({ email, password }) => {
-    return (dispatch) => {
-        dispatch({ type: LOGIN_USER  })
+      static emailChanged = (text) => {
+        return {
+            type: EMAIL_CHANGED,
+            payload: text
+        };
+    };
 
-        firebase.auth().signInWithEmailAndPassword(email, password)
-            .then(user => loginUserSuccess(dispatch, user))
-            .catch((error) => {
-                console.log(error);
-                firebase.auth().createUserWithEmailAndPassword(email, password)
-                    .then(user => loginUserSuccess(dispatch, user))
-                    .catch(() => loginUserFail(dispatch));
-            });
+    static passwordChanged = (text) => {
+        return {
+            type: PASSWORD_CHANGED,
+            payload: text
+        };
+    };
+
+    static loginUser = ({ email, password }) => {
+        return (dispatch) => {
+            dispatch({ type: LOGIN_USER });
+            firebase.auth().signInWithEmailAndPassword(email, password)
+                .then(user => AuthActions.loginUserSuccess(dispatch, user))
+                .catch((error) => AuthActions.loginUserFail(dispatch,error));
+        };
+    };
+
+    static loginUserSuccess = (dispatch, user) => {
+        dispatch({
+            type: LOGIN_USER_SUCCESS,
+            payload: user
+        });
+        alert("Succccccccccccccccccccccccccccccccess")
+        // Actions.dashboard();
+    };
+
+    static loginUserFail = (dispatch) => {
+        dispatch({ type: LOGIN_USER_FAIL });
+    };
+
+
+    static signupUser = ({ email, password }) => {
+        return (dispatch) => {
+            dispatch({ type: SIGNUP_USER });
+            firebase.auth().createUserWithEmailAndPassword(email, password)
+                .then(user => AuthActions.signupUserSuccess(dispatch, user))
+                .catch((error) => AuthActions.signupUserFail(dispatch,error));
+        };  
 
     };
-};
 
-const loginUserSuccess = (dispatch, user) => {
-    dispatch({
-        type: LOGIN_USER_SUCCESS,
-        payload: user
-    });
-    Actions.main();
-};
+    static signupUserSuccess = (dispatch, user) => {
+        dispatch({
+            type: SIGNUP_USER_SUCCESS,
+            payload: user
+        });
+        Actions.login();
+    };
 
-const loginUserFail = (dispatch) => {
-    dispatch({ type: LOGIN_USER_FAIL });
-};
+   static signupUserFail = (dispatch) => {
+        dispatch({ type: LOGIN_USER_FAIL});
+    };
+   
+}

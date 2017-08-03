@@ -9,36 +9,31 @@ class SignUp extends Component {
     constructor() {
         super();
         this.state = {
-            username: '',
-            password: ''
+
         }
     }
 
     onEmailChange(text) {
-        this.setState({ username: text })
-        // this.props.emailChange(text)
-        console.log(this.state.username)
+        this.props.emailChange(text)
     }
     onPasswordChange(text) {
-        this.setState({ password: text })
-        // this.props.passwordChange(text)
-        console.log(this.state.password)
+        this.props.passwordChange(text)
+    }
+    firstName(text) {
+        this.props.firstChange(text)
+    }
+    lastName(text) {
+        this.props.lastChange(text)
     }
 
-    onButtonPress() {
-        const { email, password } = this.props;
-        // console.log("this.prop", this.props);
-        // this.props.signupUser({ email, password });
-        const obj = {
-            user : this.state.username,
-            pass : this.state.password
-        }
-        
 
+    onButtonPress() {
+        const { first, last, email, password, } = this.props;
+        this.props.signupUser({ first, last, email, password });
     }
     renderButton() {
         if (this.props.loading) {
-            return <Spinner size="large" color='purple' style={styles.spinnerStyle} />
+            return <Spinner size="large" style={styles.spinnerStyle} />
         }
         return (
             <Button rounded style={styles.button} onPress={() => this.onButtonPress()}>
@@ -52,22 +47,25 @@ class SignUp extends Component {
             <Container style={styles.backgroundImage}>
                 <Image source={require('../../Assets/splash.png')} style={styles.backImage}>
                     <Form style={styles.form}>
-                        {/*<Item rounded style={styles.input}>
+                        <Item rounded style={styles.input}>
                             <Icon active name='ios-person' style={styles.icons} />
                             <Input placeholder="First Name"
-                                onChangeText={this.firstChange.bind(this)}
+                                style={styles.field}
+                                onChangeText={this.firstName.bind(this)}
                             />
                         </Item>
                         <Item rounded style={styles.input}>
                             <Icon active name='ios-person' style={styles.icons} />
                             <Input placeholder="Last Name"
-                                onChangeText={this.lastChange.bind(this)}
+                                style={styles.field} F
+                                onChangeText={this.lastName.bind(this)}
                             />
-                        </Item>*/}
+                        </Item>
                         <Item rounded style={styles.input}>
                             <Icon active name='ios-person' style={styles.icons} />
                             <Input placeholder="Username"
-                                onChangeText={(val) => this.onEmailChange(val)}
+                                style={styles.field}
+                                onChangeText={this.onEmailChange.bind(this)}
                             />
                         </Item>
                         <Item rounded style={styles.input} transparent>
@@ -75,10 +73,12 @@ class SignUp extends Component {
                             <Input placeholder="Password"
                                 style={styles.field}
                                 secureTextEntry
-                                onChangeText={(val) => this.onPasswordChange(val)}
+                                onChangeText={this.onPasswordChange.bind(this)}
                             />
                         </Item>
-
+                        <Text style={styles.errorStyle}>
+                            {this.props.error}
+                        </Text>
                         {this.renderButton()}
 
                         <Button rounded style={styles.button1} onPress={() => Actions.login()}>
@@ -138,21 +138,27 @@ const styles = StyleSheet.create({
         marginLeft: 20,
         marginTop: 10
     },
+    errorStyle: {
+        fontSize: 14,
+        alignSelf: 'center',
+        color: 'red'
+    }
 });
 
 const mapStateToProps = ({ auth }) => {
-    const { email, password, loading, error } = auth;
+    const { first, last, email, password, loading, error } = auth;
 
-    return { email, password, loading, error };
+    return { first, last, email, password, loading, error };
 
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
+        firstChange: (text) => dispatch(AuthActions.firstChange(text)),
+        lastChange: (text) => dispatch(AuthActions.lastChange(text)),
         emailChange: (text) => dispatch(AuthActions.emailChanged(text)),
         passwordChange: (text) => dispatch(AuthActions.passwordChanged(text)),
         signupUser: (userData) => dispatch(AuthActions.signupUser(userData))
     };
 };
-
-export default connect(mapStateToProps, mapDispatchToProps)(SignUp);
+export default connect(mapStateToProps, mapDispatchToProps)(SignUp); 
