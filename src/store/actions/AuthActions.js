@@ -57,8 +57,8 @@ export class AuthActions {
             type: LOGIN_USER_SUCCESS,
             payload: user
         });
-        alert("Succccccccccccccccccccccccccccccccess")
-        // Actions.dashboard();
+        // alert("Succccccccccccccccccccccccccccccccess")
+        Actions.dashboard();
     };
 
     static loginUserFail = (dispatch) => {
