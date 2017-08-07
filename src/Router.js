@@ -3,7 +3,9 @@ import { Scene, Router, Actions } from 'react-native-router-flux';
 import LoginForm from './component/Auth/login'
 import SignUp from './component/Auth/signup'
 import Dashboard from './component/Doctor/dashboard'
-import PatientCreate from './component/Doctor/patientList'
+import PatientList from './component/Doctor/patientList'
+import PatientAdd from './component/Doctor/patientAdd'
+import PatientSearch from './component/Doctor/patientSearch'
 
 const RouterComponent = () => {
     return (
@@ -13,6 +15,9 @@ const RouterComponent = () => {
                 {/*<Scene key="login" component={LoginForm} hideNavBar={true} />*/}
                 {/*<Scene key="signup" component={SignUp} hideNavBar={true} />*/}
                 <Scene key="dashboard" component={Dashboard} hideNavBar={true} />
+                <Scene key="patientadd" component={PatientAdd} hideNavBar={true} />
+                <Scene key="patientlist" component={PatientList} hideNavBar={true} />
+                <Scene key="patientsearch" component={PatientSearch} hideNavBar={true} />
 
             </Scene>
 

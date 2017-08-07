@@ -1,18 +1,18 @@
 import React, { Component } from 'react';
 import { Container, Header, Left, Body, Right, Button, Icon, Title, Text } from 'native-base';
-import HeaderComp from '../common/header'
 import { Actions } from 'react-native-router-flux'
+import HeaderComp from '../common/header'
 
-class PatientList extends Component {
+class PatientAdd extends Component {
     render() {
         return (
             <Container>
-                <HeaderComp header="Patient List" name="arrow-back" press={() => Actions.dashboard()} />
-                <Text>Patient List</Text>
+                <HeaderComp header="Patient Add" name="arrow-back" press={() => Actions.dashboard()}/>
+                <Text>Patient Add</Text>
             </Container>
         )
     }
 }
 
 
-export default PatientList;
+export default PatientAdd;
