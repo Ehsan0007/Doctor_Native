@@ -13,7 +13,15 @@ export const LOGIN_USER_SUCCESS = 'login_user_success';
 export const LOGIN_USER_FAIL = 'login_user_fail';
 export const LOGIN_USER = 'login_user';
 
-// export const EMPLOYEE_UPDATE = 'empolyee_update';
-// export const EMPLOYEE_CREATE = 'empolyee_create';
-// export const EMPLOYEES_FETCH_SUCCESS = 'employee_fetch_success';
+export const PATIENT_CREATE = 'patient_create';
+export const PATIENT_CREATE_SUCCESS = 'patient_create_success';
+export const PATIENT_CREATE_FAIL = 'patient_create_fail';
+
+
+export const PATIENT_NAME = 'patient_name';
+export const PATIENT_DISEASE = 'patient_disease';
+export const PATIENT_MEDICATION = 'patient_medication';
+export const COST = 'cost';
+
+
 

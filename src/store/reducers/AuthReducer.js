@@ -18,7 +18,8 @@ const INITIAL_STATE = {
     password: '',
     user: null,
     error: '',
-    loading: false
+    loading: false,
+    isLoggin : false,
 };
 
 export default (state = INITIAL_STATE, action) => {
@@ -35,7 +36,7 @@ export default (state = INITIAL_STATE, action) => {
         case LOGIN_USER:
             return { ...state, loading: true, error: '' };
         case LOGIN_USER_SUCCESS:
-            return { ...state, ...INITIAL_STATE, user: action.payload };
+            return { ...state, ...INITIAL_STATE, user: action.payload , isLoggin : true };
         case LOGIN_USER_FAIL:
             return { ...state, error: 'Authentication Failed.Enter valid username & password', password: '', loading: false };
         case SIGNUP_USER:

@@ -1,4 +1,4 @@
-import firebase from 'firebase';
+import firebase from '../../configs/db';
 import { Actions } from 'react-native-router-flux';
 import {
     FIRST_NAME,
@@ -57,7 +57,6 @@ export class AuthActions {
             type: LOGIN_USER_SUCCESS,
             payload: user
         });
-        // alert("Succccccccccccccccccccccccccccccccess")
         Actions.dashboard();
     };
 
