@@ -22,6 +22,10 @@ export const PATIENT_NAME = 'patient_name';
 export const PATIENT_DISEASE = 'patient_disease';
 export const PATIENT_MEDICATION = 'patient_medication';
 export const COST = 'cost';
+export const MOBILE = 'mobile';
+export const GENDER = 'gender';
+export const DATE = 'DATE';
 
 
+export const LOAD_PATIENT_LIST_SUCCESS = 'load_patient_list_success';
 

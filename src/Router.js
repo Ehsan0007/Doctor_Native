@@ -6,6 +6,7 @@ import Dashboard from './component/Doctor/dashboard'
 import PatientListContainer from './component/Doctor/patientList'
 import AddPatientContainer from './Container/addPatient'
 import PatientSearch from './component/Doctor/patientSearch'
+import PatientProfile from './component/Doctor/patientProfile'
 
 const RouterComponent = () => {
     return (
@@ -17,6 +18,7 @@ const RouterComponent = () => {
                 <Scene key="patientadd" component={AddPatientContainer} hideNavBar={true} />
                 <Scene key="patientlist" component={PatientListContainer} hideNavBar={true} />
                 <Scene key="patientsearch" component={PatientSearch} hideNavBar={true} />
+                <Scene key="patientprofile" component={PatientProfile} hideNavBar={true} />
 
             </Scene>
 

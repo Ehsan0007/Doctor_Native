@@ -7,7 +7,8 @@ class AddPatients extends Component {
     constructor() {
         super();
         this.state = {
-            // date: ""
+            selected1: "Male",
+            date: new Date()
         }
     }
     patientadd(val) {
@@ -23,35 +24,48 @@ class AddPatients extends Component {
     cost(val) {
         this.props.oncostChange(val)
     }
-    // date(val){
-    //     this.setState({data : val})
-    // }
+    onMObile(val) {
+        this.props.onMObileChange(val)
+    }
+    Genderchange(value) {
+        this.setState({
+            selected1: value
+        })
+        console.log(value, "value from container")
+        this.props.onGenderChange(value)
+    }
+    date(value) {
+        this.setState({
+            date: value
+        })
+        this.props.onDateChange(value)
+        console.log("Selected Date", value)
+    }
 
     onButtonPress() {
 
-        const { patientname, patientdisease, patientmedication, cost } = this.props;
-        
-        if (this.props.patientname && this.props.patientdisease && this.props.patientdisease && this.props.cost) {
-            this.props.addPatient({ patientname, patientdisease, patientmedication, cost })
+        const { patientname, patientdisease, patientmedication, cost, mobile, genderchange, datechange } = this.props;
+        if (patientname && patientmedication && patientmedication && mobile && cost && datechange, genderchange) {
+            this.props.addPatient({ patientname, patientdisease, patientmedication, cost, mobile, genderchange, datechange })
             alert("Success Insert")
-        } else {
+        }
+        else {
             alert("Insert Unfill Data")
         }
     }
 
     render() {
         return (
-            <PatientAdd onPress={() => this.onButtonPress()} patientName={this.patientadd.bind(this)} patientDisease={this.patientdisease.bind(this)} patientMedication={this.patientmedication.bind(this)} cost={this.cost.bind(this)} />
+            <PatientAdd dateSelected={this.state.date} genderSelected={this.state.selected1} onPress={() => this.onButtonPress()} patientName={this.patientadd.bind(this)} patientDisease={this.patientdisease.bind(this)} patientMedication={this.patientmedication.bind(this)} cost={this.cost.bind(this)} gender={this.Genderchange.bind(this)} date={this.date.bind(this)} mobile={this.onMObile.bind(this)} />
         )
     }
 }
 
 const mapStateToProps = ({ patient }) => {
 
-    const { patientname, patientdisease, patientmedication, cost, loading, } = patient;
+    const { patientname, patientdisease, patientmedication, cost, mobile, genderchange, datechange, loading } = patient;
+    return { patientname, patientdisease, patientmedication, cost, mobile, genderchange, datechange, loading };
 
-    return { patientname, patientdisease, patientmedication, cost, loading };
-    debugger
 };
 
 const mapDispatchToProps = (dispatch) => {
@@ -60,7 +74,10 @@ const mapDispatchToProps = (dispatch) => {
         onpatientdiseaseChange: (val) => dispatch(PatientAction.onpatientdiseaseChange(val)),
         onpatientMedChange: (val) => dispatch(PatientAction.onpatientMedChange(val)),
         oncostChange: (val) => dispatch(PatientAction.oncostChange(val)),
-        addPatient: (userData) => dispatch(PatientAction.addPatient(userData))
+        onMObileChange: (userData) => dispatch(PatientAction.onMObileChange(userData)),
+        addPatient: (userData) => dispatch(PatientAction.addPatient(userData)),
+        onGenderChange: (userData) => dispatch(PatientAction.onGenderChange(userData)),
+        onDateChange: (userData) => dispatch(PatientAction.onDateChange(userData)),
     };
 };
 

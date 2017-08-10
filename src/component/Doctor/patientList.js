@@ -1,30 +1,58 @@
 import React, { Component } from 'react';
 import { Container, Header, Content, List, ListItem, Left, Body, Right, Thumbnail, Text } from 'native-base';
 import HeaderComp from '../common/header'
+import { ListView } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import { connect } from 'react-redux'
+import { PatientAction } from '../../store/actions'
+import ListItems from './ListShow'
 
 class PatientList extends Component {
+
+    componentWillMount() {
+        this.props.loadPatientList()
+        this.createDataSource(this.props)
+
+    }
+    componentWillReceiveProps(nextProps) {
+        this.createDataSource(nextProps);
+    }
+    createDataSource({ patients }) {
+
+        const ds = new ListView.DataSource({ rowHasChanged: (r1, r2) => r1 !== r2 });
+        this.dataSource = ds.cloneWithRows(patients);
+    }
+    renderRow(patients) {
+        return <ListItems patient={patients} />;
+        { console.log("list", patients) };
+    }
     render() {
         return (
-            <Container>
-                <HeaderComp header="Patient List" name="arrow-back" press={() => Actions.dashboard()} />
-                <List>
-                    <ListItem avatar>
-                        <Left>
-                            <Thumbnail source={{ uri: 'http://icons.iconarchive.com/icons/designbolts/free-male-avatars/128/Male-Avatar-Hair-icon.png' }} />
-                        </Left>
-                        <Body>
-                            <Text>Kumar Pratik</Text>
-                            <Text note>Doing what you like will always keep you happy . .</Text>
-                        </Body>
-                        <Right>
-                            <Text note>3:43 pm</Text>
-                        </Right>
-                    </ListItem>
-                </List>
-            </Container>
+            <ListView
+                enableEmptySections
+                dataSource={this.dataSource}
+                renderRow={this.renderRow}
+            />
         )
     }
 }
-export default PatientList
+const mapStateToProps = state => {
+
+    // const { patientLists } = patientList;
+
+    // return { patientLists };
+    const patients = _.map(state.patientList, (val, uid) => {
+        return { val, uid };
+    });
+    return { patients };
+};
+
+const mapDispatchToProps = (dispatch) => {
+    return {
+        loadPatientList: () => dispatch(PatientAction.loadPatientList()),
+    };
+};
+
+const PatientListContainer = connect(mapStateToProps, mapDispatchToProps)(PatientList);
+
+export default PatientListContainer

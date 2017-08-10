@@ -5,9 +5,14 @@ import {
     PATIENT_DISEASE,
     PATIENT_MEDICATION,
     COST,
+    GENDER,
+    DATE,
+    MOBILE,
     PATIENT_CREATE,
     PATIENT_CREATE_SUCCESS,
-    PATIENT_CREATE_FAIL
+    PATIENT_CREATE_FAIL,
+    LOAD_PATIENT_LIST_SUCCESS,
+
 
 } from './types'
 
@@ -40,6 +45,25 @@ export class PatientAction {
             payload: text
         };
     };
+    static onMObileChange = (text) => {
+        return {
+            type: MOBILE,
+            payload: text
+        };
+    };
+    static onGenderChange = (text) => {
+        return {
+            type: GENDER,
+            payload: text
+        };
+    };
+    static onDateChange = (text) => {
+        return {
+            type: DATE,
+            payload: text
+        };
+    };
+
 
     static addPatient = (data) => {
         const { currentUser } = firebase.auth()
@@ -51,6 +75,16 @@ export class PatientAction {
                     dispatch({ type: PATIENT_CREATE_SUCCESS, payload: data })
                     Actions.dashboard();
                 })
+        }
+    }
+    static loadPatientList = () => {
+        const { currentUser } = firebase.auth()
+
+        return (dispatch) => {
+            firebase.database().ref(`/users/${currentUser.uid}/patient`)
+            .on('value' ,snapshot =>{
+                dispatch({type : LOAD_PATIENT_LIST_SUCCESS , payload : snapshot.val()});
+            })
         }
     }
 

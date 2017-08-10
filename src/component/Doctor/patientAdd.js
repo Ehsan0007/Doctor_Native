@@ -1,20 +1,21 @@
 import React, { Component } from 'react';
-import { Container, Header, Left, Body, Right, Button, Icon, Title, Text, CardItem, Item, Input, Label } from 'native-base';
-import { StyleSheet, Picker, DatePickerAndroid } from 'react-native'
+import { Container, Header, Left, Body, Right, Button, Icon, Title, Text, CardItem, Item, Input, Label, Spinner, Picker, Form, Item as FormItem } from 'native-base';
+import { StyleSheet, DatePickerAndroid } from 'react-native'
 import { Actions } from 'react-native-router-flux'
 import HeaderComp from '../common/header'
 import DatePicker from 'react-native-datepicker'
 
 
 class PatientAdd extends Component {
+
     constructor() {
         super();
         this.state = {
-            date: ''
+            date: new Date(),
         }
     }
     renderButton() {
-        if(this.props.loading){
+        if (this.props.loading) {
             return <Spinner size="large" />
         }
         return (
@@ -56,6 +57,15 @@ class PatientAdd extends Component {
                 </CardItem>
                 <CardItem>
                     <Item success floatingLabel >
+                        <Label>Mobile No</Label>
+                        <Icon name="person-add"></Icon>
+                        <Input
+                            onChangeText={this.props.mobile}
+                        />
+                    </Item>
+                </CardItem>
+                <CardItem>
+                    <Item success floatingLabel >
                         <Label>Cost</Label>
                         <Icon name="person-add"></Icon>
                         <Input
@@ -63,15 +73,16 @@ class PatientAdd extends Component {
                         />
                     </Item>
                 </CardItem>
-                {/*<CardItem>
+
+                <CardItem style={styles.datepicker}>
                     <DatePicker
                         style={{ width: 200 }}
-                        date={this.state.date}
+                        date={this.props.dateSelected}
                         mode="date"
                         placeholder="select date"
                         format="YYYY-MM-DD"
-                        minDate="2016-05-01"
-                        maxDate="2016-06-01"
+                        minDate={new Date()}
+                        maxDate="2017-12-31"
                         confirmBtnText="Confirm"
                         cancelBtnText="Cancel"
                         customStyles={{
@@ -85,9 +96,20 @@ class PatientAdd extends Component {
                                 marginLeft: 36
                             }
                         }}
-                        onDateChange={this.props.date}
+                        onDateChange={(value)=>this.props.date(value)}
                     />
-                </CardItem>*/}
+                    <Picker
+                        style={styles.picker}
+                        mode="dropdown"
+                        selectedValue={this.props.genderSelected}
+                        onValueChange={(value)=> this.props.gender(value)}
+                    >    
+                        <Item label="Select" value="Select" />
+                        <Item label="Male" value="Male" />
+                        <Item label="Female" value="Female"></Item>
+                    
+                    </Picker>
+                </CardItem>
                 <CardItem>
                     {this.renderButton()}
                 </CardItem>
@@ -99,6 +121,13 @@ class PatientAdd extends Component {
 const styles = StyleSheet.create({
     label: {
         paddingLeft: 5
+    },
+    picker: {
+        width: '50%'
+    },
+    datepicker: {
+        flex: 1,
+        flexDirection: 'row'
     }
 })
 
