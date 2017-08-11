@@ -10,7 +10,7 @@ class PatientProfile extends Component {
         const data = this.props.text;
         for (var x in data) {
             array.push(data[x])
-        } console.log(array)
+        }
 
 
         return (

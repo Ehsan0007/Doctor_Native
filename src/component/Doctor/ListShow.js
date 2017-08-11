@@ -8,7 +8,6 @@ class ListItems extends Component {
 
     RowPress(value) {
         Actions.patientprofile({text : value})
-        // console.log("value",value)
     }
     render() {
         const arr = [];
@@ -16,7 +15,6 @@ class ListItems extends Component {
         Object.keys(data.val).map((key) => {
             let patientData = data.val[key];
             patientData.key = key;
-            console.log(patientData)
             arr.push(patientData)
         })
         return (
@@ -28,7 +26,7 @@ class ListItems extends Component {
                             <List key={index} onTouchStart={() => this.RowPress(val)}>
                                 <ListItem avatar>
                                     <Left>
-                                        {val.genderchange == 'Male' ? <Thumbnail source={{ uri: 'https://thumb7.shutterstock.com/display_pic_with_logo/167167554/542759665/stock-vector-man-character-face-avatar-in-glasses-modern-colorful-style-male-portrait-vector-cartoon-542759665.jpg' }} /> : <Thumbnail source={{ uri: 'http://rotarymeansbusiness.com/wp-content/uploads/avatar-female.png' }} />}
+                                        {val.genderchange == 'Male' ? <Thumbnail source={require('../../Assets/male.jpg')} /> : <Thumbnail source={require('../../Assets/avatar-female.png')} />}
                                     </Left>
                                     <Body>
                                         <Text>{val.patientname}</Text>

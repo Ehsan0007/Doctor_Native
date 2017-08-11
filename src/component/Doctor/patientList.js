@@ -24,7 +24,6 @@ class PatientList extends Component {
     }
     renderRow(patients) {
         return <ListItems patient={patients} />;
-        { console.log("list", patients) };
     }
     render() {
         return (
