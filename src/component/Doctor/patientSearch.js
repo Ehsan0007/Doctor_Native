@@ -5,7 +5,7 @@ import { Actions } from 'react-native-router-flux'
 
 class PatientSearch extends Component {
     onChange(value) {
-
+        console.log(value)
     }
     render() {
         return (
@@ -17,10 +17,10 @@ class PatientSearch extends Component {
                         <Icon name="ios-people" />
                     </Item>
                 </Header>
-                <Footer style={{marginTop: 500}}>
+                <Footer style={{ marginTop: 500 }}>
                     <FooterTab>
-                    <Button onPress={()=>Actions.dashboard()}><Text>Back</Text></Button>
-                </FooterTab>
+                        <Button onPress={() => Actions.dashboard()}><Text>Back</Text></Button>
+                    </FooterTab>
                 </Footer>
 
             </Container >

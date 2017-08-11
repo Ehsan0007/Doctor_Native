@@ -36,10 +36,7 @@ class PatientList extends Component {
     }
 }
 const mapStateToProps = state => {
-
-    // const { patientLists } = patientList;
-
-    // return { patientLists };
+    
     const patients = _.map(state.patientList, (val, uid) => {
         return { val, uid };
     });
