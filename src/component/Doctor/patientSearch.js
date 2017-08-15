@@ -23,7 +23,7 @@ class PatientSearch extends Component {
         const arr = [];
         for (var x in data) {
             arr.push(data[x])
-        }
+        }  
         // console.log("Ehsan",arr)
         return (
             <Container>
