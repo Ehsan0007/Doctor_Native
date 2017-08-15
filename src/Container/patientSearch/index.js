@@ -4,16 +4,16 @@ import PatientSearch from '../../component/Doctor/patientSearch'
 import { PatientAction } from '../../store/actions'
 
 
-const mapStateToProps = ({ patient }) => {
+const mapStateToProps = ({ patientSearch }) => {
 
-    const { patientname, patientdisease, patientmedication, cost, mobile, genderchange, datechange, loading } = patient;
-    return { patientname, patientdisease, patientmedication, cost, mobile, genderchange, datechange, loading };
+    const { patientsearch } = patientSearch;
+    return { patientsearch };
 
 };
 
 const mapDispatchToProps = (dispatch) => {
     return {
-        onpatientNameChange: (val) => dispatch(PatientAction.onpatientNameChange(val)),
+        onPatientSearch: (val) => dispatch(PatientAction.onPatientSearch(val)),
     };
 };
 

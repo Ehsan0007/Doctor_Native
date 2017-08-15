@@ -5,7 +5,7 @@ import SignUp from './component/Auth/signup'
 import Dashboard from './component/Doctor/dashboard'
 import PatientListContainer from './component/Doctor/patientList'
 import AddPatientContainer from './Container/addPatient'
-import PatientSearch from './component/Doctor/patientSearch'
+import PatientSearchContainer from './Container/patientSearch'
 import PatientProfile from './component/Doctor/patientProfile'
 
 const RouterComponent = () => {
@@ -17,11 +17,9 @@ const RouterComponent = () => {
                 <Scene key="dashboard" component={Dashboard} hideNavBar={true} />
                 <Scene key="patientadd" component={AddPatientContainer} hideNavBar={true} />
                 <Scene key="patientlist" component={PatientListContainer} hideNavBar={true} />
-                <Scene key="patientsearch" component={PatientSearch} hideNavBar={true} />
+                <Scene key="patientsearch" component={PatientSearchContainer} hideNavBar={true} />
                 <Scene key="patientprofile" component={PatientProfile} hideNavBar={true} />
-
             </Scene>
-
         </Router>
     );
 };

@@ -12,7 +12,7 @@ import {
     PATIENT_CREATE_SUCCESS,
     PATIENT_CREATE_FAIL,
     LOAD_PATIENT_LIST_SUCCESS,
-
+    LOAD_PATIENT_SEARCH_SUCCESS
 
 } from './types'
 
@@ -82,9 +82,20 @@ export class PatientAction {
 
         return (dispatch) => {
             firebase.database().ref(`/users/${currentUser.uid}/patient`)
-            .on('value' ,snapshot =>{
-                dispatch({type : LOAD_PATIENT_LIST_SUCCESS , payload : snapshot.val()});
-            })
+                .on('value', snapshot => {
+                    dispatch({ type: LOAD_PATIENT_LIST_SUCCESS, payload: snapshot.val() });
+                })
+        }
+    }
+    static onPatientSearch = (data) => {
+        const { currentUser } = firebase.auth()
+
+        return (dispatch) => {
+            firebase.database().ref(`/users/${currentUser.uid}/patient`)
+                .orderByChild("patientname").startAt(data)
+                .on('value', snapshot => {
+                    dispatch({ type: LOAD_PATIENT_SEARCH_SUCCESS, payload: snapshot.val() });
+                })
         }
     }
 

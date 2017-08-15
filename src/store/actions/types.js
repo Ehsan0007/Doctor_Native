@@ -28,4 +28,5 @@ export const DATE = 'DATE';
 
 
 export const LOAD_PATIENT_LIST_SUCCESS = 'load_patient_list_success';
+export const LOAD_PATIENT_SEARCH_SUCCESS = 'load_patient_search_success';
 
