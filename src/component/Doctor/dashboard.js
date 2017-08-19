@@ -3,10 +3,14 @@ import { Container, Content, Card, CardItem, Form, Item, Input, Label, Icon, Spi
 import { Image, DrawerLayoutAndroid, View, TouchableHighlight, ScrollView, StyleSheet } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import HeaderComp from '../common/header'
-
+import { connect } from 'react-redux'
+import { AuthActions } from '../../store/actions'
 
 class Dashboard extends Component {
-
+    handlelogout() {
+        this.props.logoutRequest()
+        // alert(234234)
+    }
     render() {
         return (
             <Container style={styles.container}>
@@ -40,21 +44,9 @@ class Dashboard extends Component {
                 </View>
                 <Footer>
                     <FooterTab>
-                        <Button vertical>
-                            <Icon name="apps" />
-                            <Text>Patient</Text>
-                        </Button>
-                        <Button vertical>
-                            <Icon name="list" />
-                            <Text>patient</Text>
-                        </Button>
-                        <Button vertical active>
-                            <Icon active name="navigate" />
-                            <Text>Navigate</Text>
-                        </Button>
-                        <Button vertical>
-                            <Icon name="person" />
-                            <Text>Contact</Text>
+                        <Button vertical onPress={() => this.handlelogout()}>
+                            <Icon name="ios-log-out" />
+                            <Text>Logout</Text>
                         </Button>
                     </FooterTab>
                 </Footer>
@@ -85,7 +77,6 @@ const styles = StyleSheet.create({
         borderRadius: 50,
         alignItems: 'center',
         justifyContent: 'flex-start',
-        // cursor : 'pointer'
     },
     card2: {
         width: 80,
@@ -123,44 +114,23 @@ const styles = StyleSheet.create({
         fontSize: 12,
         textAlign: 'center'
     },
-    // cardParent: {
-    //     flex: 1,
-    //     width: 80,
-    //     height: 140,
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    //     // borderTop : 'none'
-    //     borderTopRightRadius: 50,
-    //     borderColor: '#4D585C',
-    //      backgroundColor: '#A8C29B'
-    // },
-    // cardParent1: {
-    //     flex: 1,
-    //     width: 80,
-    //     height: 140,
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    //     // borderTop : 'none',
-    //     marginLeft: 10,
-    //     borderTopRightRadius: 50,
-    //     backgroundColor: '#A8C29B'
-    // },
-    // cardParent2: {
-    //     flex: 1,
-    //     width: 80,
-    //     height: 140,
-    //     alignItems: 'center',
-    //     justifyContent: 'center',
-    //     // borderTop : 'none'
-    //     marginLeft: 10,
-    //     borderTopRightRadius: 50,
-    //      backgroundColor: '#A8C29B'
-    // },
     image: {
         width: 50,
         height: 50,
-        // display : 'block'
     }
 })
 
-export default Dashboard;
+const mapStateToProps = ({ patientSearch }) => {
+
+    const { patientsearch } = patientSearch;
+    return { patientsearch };
+
+};
+const mapDispatchToProps = (dispatch) => {
+    return {
+        logoutRequest: () => dispatch(AuthActions.logoutRequest()),
+    };
+};
+
+const mainRootContainer = connect(mapStateToProps, mapDispatchToProps)(Dashboard)
+export default mainRootContainer;

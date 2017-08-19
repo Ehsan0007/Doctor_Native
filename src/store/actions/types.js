@@ -13,6 +13,8 @@ export const LOGIN_USER_SUCCESS = 'login_user_success';
 export const LOGIN_USER_FAIL = 'login_user_fail';
 export const LOGIN_USER = 'login_user';
 
+export const LOGOUT_USER_SUCCESS = 'logout_user_success';
+
 export const PATIENT_CREATE = 'patient_create';
 export const PATIENT_CREATE_SUCCESS = 'patient_create_success';
 export const PATIENT_CREATE_FAIL = 'patient_create_fail';

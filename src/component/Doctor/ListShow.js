@@ -7,16 +7,14 @@ import HeaderComp from '../common/header'
 class ListItems extends Component {
 
     RowPress(value) {
-        Actions.patientprofile({text : value})
+        Actions.patientprofile({ text: value })
     }
     render() {
-        const arr = [];
         const data = this.props.patient;
-        Object.keys(data.val).map((key) => {
-            let patientData = data.val[key];
-            patientData.key = key;
-            arr.push(patientData)
-        })
+        const arr = [];
+        for (var x in data.val) {
+            arr.push(data.val[x])
+        }
         return (
             <Container>
                 <HeaderComp header="Patient List" name="arrow-back" press={() => Actions.dashboard()} />

@@ -10,26 +10,27 @@ import {
     LOGIN_USER,
     SIGNUP_USER_SUCCESS,
     SIGNUP_USER,
-    SIGNUP_USER_FAIL
+    SIGNUP_USER_FAIL,
+    LOGOUT_USER_SUCCESS
 } from './types';
 
 export class AuthActions {
 
-      static firstChange = (text) => {
+    static firstChange = (text) => {
         return {
             type: FIRST_NAME,
             payload: text
         };
     };
 
-      static lastChange = (text) => {
+    static lastChange = (text) => {
         return {
             type: LAST_NAME,
             payload: text
         };
     };
 
-      static emailChanged = (text) => {
+    static emailChanged = (text) => {
         return {
             type: EMAIL_CHANGED,
             payload: text
@@ -48,7 +49,7 @@ export class AuthActions {
             dispatch({ type: LOGIN_USER });
             firebase.auth().signInWithEmailAndPassword(email, password)
                 .then(user => AuthActions.loginUserSuccess(dispatch, user))
-                .catch((error) => AuthActions.loginUserFail(dispatch,error));
+                .catch((error) => AuthActions.loginUserFail(dispatch, error));
         };
     };
 
@@ -70,10 +71,20 @@ export class AuthActions {
             dispatch({ type: SIGNUP_USER });
             firebase.auth().createUserWithEmailAndPassword(email, password)
                 .then(user => AuthActions.signupUserSuccess(dispatch, user))
-                .catch((error) => AuthActions.signupUserFail(dispatch,error));
-        };  
+                .catch((error) => AuthActions.signupUserFail(dispatch, error));
+        };
 
     };
+    static logoutRequest = () => {
+        return (dispatch) => {
+            firebase.auth().signOut().then((data) => {
+                dispatch({ type: LOGOUT_USER_SUCCESS,payload , payload :data });
+                alert("Sucess")
+                Actions.login()
+            }).catch((error) => { alert("Logout Errro", error) })
+
+        }
+    }
 
     static signupUserSuccess = (dispatch, user) => {
         dispatch({
@@ -83,8 +94,8 @@ export class AuthActions {
         Actions.login();
     };
 
-   static signupUserFail = (dispatch) => {
-        dispatch({ type: LOGIN_USER_FAIL});
+    static signupUserFail = (dispatch) => {
+        dispatch({ type: LOGIN_USER_FAIL });
     };
-   
+
 }
