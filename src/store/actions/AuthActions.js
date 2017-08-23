@@ -77,12 +77,14 @@ export class AuthActions {
     };
     static logoutRequest = () => {
         return (dispatch) => {
-            firebase.auth().signOut().then((data) => {
-                dispatch({ type: LOGOUT_USER_SUCCESS,payload , payload :data });
-                alert("Sucess")
-                Actions.login()
-            }).catch((error) => { alert("Logout Errro", error) })
-
+            firebase.auth().signOut().then((val)=>{
+                AuthActions.logout(dispatch,val)
+                if(val){
+                    Actions.login()
+                }
+            }).catch((err)=>{
+                alert("Error",err)
+            })
         }
     }
 
@@ -96,6 +98,9 @@ export class AuthActions {
 
     static signupUserFail = (dispatch) => {
         dispatch({ type: LOGIN_USER_FAIL });
+    };
+    static logout = (dispatch) => {
+        dispatch({ type: LOGOUT_USER_SUCCESS });
     };
 
 }

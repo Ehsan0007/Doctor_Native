@@ -1,55 +1,82 @@
 import React, { Component } from 'react';
 import { Container, Content, Card, CardItem, Form, Item, Input, Label, Icon, Spinner, Right, Header, Body, Title, Button, Left, Text, Footer, Thumbnail, FooterTab, Badge } from 'native-base';
-import { Image, DrawerLayoutAndroid, View, TouchableHighlight, ScrollView, StyleSheet } from 'react-native';
+import { Image, DrawerLayoutAndroid, View, TouchableHighlight, ScrollView, StyleSheet, ListView } from 'react-native';
 import { Actions } from 'react-native-router-flux';
 import HeaderComp from '../common/header'
 import { connect } from 'react-redux'
 import { AuthActions } from '../../store/actions'
 
 class Dashboard extends Component {
+    openDrawer = () => {
+        this.refs['myDrawer'].openDrawer();
+    }
+    closeDrawer = () => {
+        this.refs['myDrawer'].closeDrawer();
+    }
     handlelogout() {
         this.props.logoutRequest()
-        // alert(234234)
     }
     render() {
+        var navigationView = (
+            <View>
+                <TouchableHighlight onPress={() => Actions.patientadd()}>
+                    <CardItem style={styles.drawermenu}>
+                        <Icon name="ios-add-circle-outline" style={styles.drawericon}></Icon>
+                        <Text style={styles.drawertext}>Add Patient</Text>
+                    </CardItem>
+                </TouchableHighlight>
+                <TouchableHighlight onPress={()=>Actions.patientlist()}>
+                    <CardItem style={styles.drawermenu}>
+                        <Icon name="list" style={styles.drawericon}></Icon>
+                        <Text style={styles.drawertext}>Patient List</Text>
+                    </CardItem>
+                </TouchableHighlight>
+                <TouchableHighlight onPress={()=>Actions.patientsearch()}>
+                    <CardItem style={styles.drawermenu}>
+                        <Icon name="ios-search-outline" style={styles.drawericon}></Icon>
+                        <Text style={styles.drawertext}>Search</Text>
+                    </CardItem>
+                </TouchableHighlight>
+            </View>
+        );
         return (
             <Container style={styles.container}>
-                <HeaderComp header="Dashboard" name="menu" />
-                <Image source={require('../../Assets/mobile.jpg')} style={styles.pic} />
-                <View style={styles.view}>
+                <HeaderComp header="Dashboard" name="menu" logouticon="ios-log-out-outline" logout={() =>alert(342)} press={() => this.openDrawer()} />
+                <DrawerLayoutAndroid
+                    style={styles.drawer}
+                    ref="myDrawer"
+                    drawerWidth={250}
+                    drawerPosition={DrawerLayoutAndroid.positions.Left}
+                    renderNavigationView={() => navigationView}
+                >
+                    <Image source={require('../../Assets/mobile.jpg')} style={styles.pic} />
 
-                    <CardItem style={styles.card1}>
-                        <View onTouchStart={() => Actions.patientadd()}>
-                            <Image source={require('../../Assets/user_add.png')} style={styles.image} />
-                        </View>
-                    </CardItem>
+                    <View style={styles.view}>
+                        <CardItem style={styles.card1}>
+                            <View onTouchStart={() => Actions.patientadd()}>
+                                <Image source={require('../../Assets/user_add.png')} style={styles.image} />
+                            </View>
+                        </CardItem>
 
 
-                    <CardItem style={styles.card2}>
-                        <View onTouchStart={() => Actions.patientlist()}>
-                            <Image source={require('../../Assets/patientdetail.png')} style={styles.image} />
-                        </View>
-                    </CardItem>
+                        <CardItem style={styles.card2}>
+                            <View onTouchStart={() => Actions.patientlist()}>
+                                <Image source={require('../../Assets/patientdetail.png')} style={styles.image} />
+                            </View>
+                        </CardItem>
 
-                    <CardItem style={styles.card3}>
-                        <View onTouchStart={() => Actions.patientsearch()}>
-                            <Image source={require('../../Assets/search.png')} style={styles.image} />
-                        </View>
-                    </CardItem>
-                </View>
-                <View style={{ flex: 1, flexDirection: 'row', marginBottom: 40, marginLeft: 10 }}>
-                    <CardItem style={styles.seccard}><Text style={styles.patientcaption} onPress={() => Actions.patientadd()}>Patient Add</Text></CardItem>
-                    <CardItem style={styles.seccard}><Text style={styles.patientcaption} onPress={() => Actions.patientlist()}>Patient List</Text></CardItem>
-                    <CardItem style={styles.seccard}><Text style={styles.patientcaption} onPress={() => Actions.patientsearch()}>Search Patients</Text></CardItem>
-                </View>
-                <Footer>
-                    <FooterTab>
-                        <Button vertical onPress={() => this.handlelogout()}>
-                            <Icon name="ios-log-out" />
-                            <Text>Logout</Text>
-                        </Button>
-                    </FooterTab>
-                </Footer>
+                        <CardItem style={styles.card3}>
+                            <View onTouchStart={() => Actions.patientsearch()}>
+                                <Image source={require('../../Assets/search.png')} style={styles.image} />
+                            </View>
+                        </CardItem>
+                    </View>
+                    <View style={{ flex: 1, flexDirection: 'row', marginBottom: 40, marginLeft: 10 }}>
+                        <CardItem style={styles.seccard}><Text style={styles.patientcaption} onPress={() => Actions.patientadd()}>Patient Add</Text></CardItem>
+                        <CardItem style={styles.seccard}><Text style={styles.patientcaption} onPress={() => Actions.patientlist()}>Patient List</Text></CardItem>
+                        <CardItem style={styles.seccard}><Text style={styles.patientcaption} onPress={() => Actions.patientsearch()}>Search Patients</Text></CardItem>
+                    </View>
+                </DrawerLayoutAndroid >
             </Container>
         )
     }
@@ -60,9 +87,15 @@ const styles = StyleSheet.create({
     container: {
         backgroundColor: '#2C3286',
     },
+    drawer: {
+        backgroundColor: '#2C3286'
+    },
     pic: {
         width: '100%',
         height: 260
+    },
+    cover: {
+        width: 10
     },
     view: {
         flex: 1,
@@ -107,7 +140,8 @@ const styles = StyleSheet.create({
         borderColor: '#2C3286',
         backgroundColor: '#2C3286',
         alignItems: 'center',
-        justifyContent: 'center'
+        justifyContent: 'center',
+        marginTop: -20
     },
     patientcaption: {
         color: '#fff',
@@ -117,7 +151,19 @@ const styles = StyleSheet.create({
     image: {
         width: 50,
         height: 50,
-    }
+    },
+    drawermenu: {
+        backgroundColor: '#4E48B2'
+    },
+    drawertext: {
+        fontSize: 12,
+        color: 'white'
+    },
+    drawericon: {
+        color: 'white'
+    },
+
+
 })
 
 const mapStateToProps = ({ patientSearch }) => {

@@ -23,19 +23,18 @@ class PatientSearch extends Component {
         const arr = [];
         for (var x in data) {
             arr.push(data[x])
-        }  
+        }
         // console.log("Ehsan",arr)
         return (
             <Container>
-              
-                    <Header searchBar rounded>
-                        <Item>
-                            <Icon name="ios-search" />
-                            <Input placeholder="Search" onChangeText={(value) => this.onChange(value)} />
-                            <Icon name="ios-people" />
-                        </Item>
-                    </Header>
-                <Content>
+                <Header searchBar rounded>
+                    <Item>
+                        <Icon name="ios-search" />
+                        <Input placeholder="Search" onChangeText={(value) => this.onChange(value)} />
+                        <Icon name="ios-people" />
+                    </Item>
+                </Header>
+                <Content>   
                     {arr.map((val, index) => {
                         return (
                             <List key={index} onTouchStart={() => this.RowPress(val)}>

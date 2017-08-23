@@ -91,8 +91,7 @@ export class PatientAction {
         const { currentUser } = firebase.auth()
 
         return (dispatch) => {
-            firebase.database().ref(`/users/${currentUser.uid}/patient`)
-                .orderByChild("patientname").startAt(data)
+            firebase.database().ref(`/users/${currentUser.uid}/patient`).orderByChild("patientname").equalTo(data)
                 .on('value', snapshot => {
                     dispatch({ type: LOAD_PATIENT_SEARCH_SUCCESS, payload: snapshot.val() });
                 })

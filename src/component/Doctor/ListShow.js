@@ -18,8 +18,8 @@ class ListItems extends Component {
         return (
             <Container>
                 <HeaderComp header="Patient List" name="arrow-back" press={() => Actions.dashboard()} />
-                <Content>
-                    {arr && arr.map((val, index) => {
+                {arr && arr.length > 0 ? <Content>
+                    {arr.map((val, index) => {
                         return (
                             <List key={index} onTouchStart={() => this.RowPress(val)}>
                                 <ListItem avatar>
@@ -39,7 +39,8 @@ class ListItems extends Component {
 
                         )
                     })}
-                </Content>
+                </Content> : null}
+
             </Container>
         )
     }
